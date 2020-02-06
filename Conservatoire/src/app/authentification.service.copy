@@ -1,0 +1,87 @@
+import {Injectable} from '@angular/core';
+import {CookieService} from 'ngx-cookie-service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {catchError} from 'rxjs/operators';
+import {BehaviorSubject, EMPTY, Observable} from 'rxjs';
+import {environment} from '../environments/environment';
+import {User} from './models/user';
+import {UserListService} from './user-tab/userService/user-list.service';
+
+export interface Response {
+  message: string;
+  uuid: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthentificationService {
+
+  private REFRESHTOKEN = new BehaviorSubject<string>('');
+  private _logout = false;
+  user = new BehaviorSubject<User>(new User());
+
+  constructor(private httpClient: HttpClient, private cookieService: CookieService) {
+    this.REFRESHTOKEN.next(this.cookieService.get('conservatoireRefreshToken'));
+    this.REFRESHTOKEN.subscribe(() => this.getUserToken().subscribe(token => this.loadUser(token)));
+  }
+
+  public getUserToken() {
+    return this.httpClient.get<Response>(environment.authentification_api_url + '/tokens/user?refreshToken=' + this.REFRESHTOKEN.value, {
+      headers : new HttpHeaders({
+        authorization: environment.auth_token
+      })}).pipe(catchError(() => {
+        this.changeRefreshToken('');
+        return EMPTY;
+    }));
+  }
+
+  private loadUser(userToken) {
+    if (this.getRefreshToken() != null) {
+      this.httpClient.get<User>(environment.conservatoire_user_api_url + '/user/self', {
+        headers: new HttpHeaders({
+          authorization: userToken.uuid
+        })
+      }).subscribe(user => this.user.next(user));
+    } else {
+      this.logout();
+    }
+    this.httpClient.get<User>(environment.conservatoire_user_api_url + '/user/self', {
+      headers: new HttpHeaders({
+        authorization: userToken.uuid
+      })
+    }).subscribe(value => this.user.next(value));
+  }
+
+  private getRefreshToken() {
+    return this.cookieService.get('conservatoireRefreshToken');
+  }
+
+  changeRefreshToken(newToken: string) {
+    if (newToken === '') {
+      this.cookieService.delete('conservatoireRefreshToken');
+    } else {
+      this.cookieService.set('conservatoireRefreshToken', newToken, 365, '/');
+    }
+    this.REFRESHTOKEN.next(newToken);
+  }
+
+  public get refreshToken(): Observable<string> {
+    return this.REFRESHTOKEN.asObservable();
+  }
+
+  userIsLog() {
+    return this._logout || this.REFRESHTOKEN.value !== '';
+  }
+
+  logUser() {
+    if (this.REFRESHTOKEN.value === '') {
+      window.location.href = environment.authentification_application_url + '/authorization/' + environment.auth_token;
+    }
+  }
+
+  logout() {
+    this.changeRefreshToken('');
+    this._logout = true;
+  }
+}

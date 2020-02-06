@@ -1,0 +1,40 @@
+<mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-dark indigo">
+  <mdb-navbar-brand><a class="navbar-brand" href="#">Accueil</a></mdb-navbar-brand>
+  <links>
+
+    <ul class="navbar-nav mr-auto">
+
+    <li class="nav-item dropdown" dropdown>
+      <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+        Utilisateurs<span class="caret"></span></a>
+      <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+        <a class="dropdown-item waves-light" mdbWavesEffect href="/admin/groupes">Groupes</a>
+        <a class="dropdown-item waves-light" mdbWavesEffect href="/admin/users">Liste d'utilisateurs</a>
+      </div>
+    </li>
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          Configurations<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect href="/admin/salles">Salles</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Reserver une salle</a>
+        </div>
+      </li>
+    </ul>
+
+
+    <ul class="navbar-nav nav-flex-icons">
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          {{this.authentificationService.user.value.username}}<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Profile</a>
+        </div>
+      </li>
+      <li class="nav-item ml-auto">
+        <a class="nav-link" (click)="this.logout();"><i class="fas fa-power-off"></i></a>
+      </li>
+    </ul>
+  </links>
+
+  </mdb-navbar>

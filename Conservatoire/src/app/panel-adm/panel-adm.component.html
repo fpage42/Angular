@@ -1,0 +1,6 @@
+<app-navbar-adm></app-navbar-adm>
+<app-user-tab *ngIf="router.isActive('/admin/users', false) && id==null"></app-user-tab>
+<app-salle-tab *ngIf="router.isActive('/admin/salles', false) && id==null"></app-salle-tab>
+<app-group-tab *ngIf="router.isActive('/admin/groupes', false)"></app-group-tab>
+<app-user-profile *ngIf="router.isActive('/admin/users', false) && id!=null"></app-user-profile>
+<app-salles-details *ngIf="router.isActive('/admin/salles', false) && id!=null"></app-salles-details>

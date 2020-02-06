@@ -1,0 +1,29 @@
+<table mdbTable #tableEl="mdbTable" bordered="true" hover="true">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prenom</th>
+      <th>Email</th>
+      <th style="width: 73%">Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let el of elements; let i = index">
+      <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.lastName}}</th>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.firstName}}</td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.email}}</td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"></td>
+      <td  *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+        <button mdbBtn type="button" color="deep-purple" mdbWavesEffect (click)="displayProfile(el.uuid)">Voir le profil</button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="lighten-5 w-100">
+    <tr>
+      <td colspan="5">
+        <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+      </td>
+    </tr>
+  </tfoot>
+  </table>

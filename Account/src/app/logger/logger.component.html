@@ -1,0 +1,16 @@
+<div style="margin-top: 10%" class="row justify-content-center">
+  <div class="border border-light col-sm-6 col-md-8 col-lg-4">
+    <div class="row justify-content-center">
+      <div class="btn-group w-100" role="group" aria-label="Basic example">
+        <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect (click)="registerMode=false">Connexion</button>
+        <button mdbBtn type="button" color="primary" class="waves-light" mdbWavesEffect (click)="registerMode=true">Inscription</button>
+      </div>
+    </div>
+    <div class="row p-5 text-center">
+      <div class="col-md-12">
+        <app-register *ngIf="registerMode"></app-register>
+        <app-login *ngIf="!registerMode"></app-login>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+<app-logger *ngIf="!this.authentificationService.userIsLog()"></app-logger>
+<div *ngIf="this.authentificationService.userIsLog()">
+<app-give-permissions></app-give-permissions>
+</div>

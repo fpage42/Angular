@@ -1,0 +1,9 @@
+
+<form class="container text-center p-5" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+
+  <label class="d-flex">Nom</label>
+  <input type="text" formControlName="name" class="form-control mb-4" placeholder="Nom">
+  <label class="d-flex">Taille</label>
+  <input type="text" formControlName="size" class="form-control mb-4" placeholder="Taille">
+  <button mdbBtn color="info" block="true" class="my-4" type="submit" [disabled]="!user.userPermissions.includes('user.modify')">Enregistrer les modifications</button>
+</form>
