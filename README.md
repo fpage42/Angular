@@ -4,6 +4,7 @@ La partie web de mon projet avorté de creation d'entreprise. Pour ce projet j'a
 
 La partie web est entierement realisée grace a Angular 8 ainsi que [MDBootstrap](https://mdbootstrap.com/docs/angular/)
 
+Partie API https://github.com/fpage42/JavaApis
 ## Account
 
 Petite application Angular qui permet de gerer l'authentification des utilisateurs. Elle interagie principalement avec l'API Authentification et permet:
